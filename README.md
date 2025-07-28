@@ -17,4 +17,4 @@ It's a great starting point for learning concepts such as backtracking, game tre
 - Simple and beginner-friendly structure
 
 # About myself
-I am 14 years old in 2025, I am moving to Canada with my family. I'm a coding-enthusiast since 12. I can code basic Python, Swift and SwiftUI. I wish I can build an Apple platform one day in the future.
+I am 14 years old in 2025, I am moving to Canada with my family. I'm a coding-enthusiast since 12. I can code basic Python, Swift and SwiftUI. I wish I can build an Apple platform app one day in the future.

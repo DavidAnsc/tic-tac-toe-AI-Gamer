@@ -1,4 +1,6 @@
-# This is the class that can store the data of positions
+
+# This is the class that can store the data types. And also no direct expression in the file, only declaration and functions.
+
 class PositionData:
     position: list[int]
 
@@ -41,3 +43,7 @@ class BoardData:
 
 # This is the list that stores all the board data instances.
 boardList: list[BoardData] = []
+
+for x in range(0, 400):
+    n = BoardData([], [], False, False, False, False)
+    boardList.append(n)

@@ -71,7 +71,7 @@ def oneOneBoardList():
             #     print(oItem, xItem)
 
 
-def oneTwoBoardList():
+def twoOneBoardList():
     index = -1
     for v in BoardData.allPlacements:
         index = index + 1
@@ -125,7 +125,7 @@ def oneTwoBoardList():
 
 
 
-oneTwoBoardList()
+twoOneBoardList()
 print("Before removing duplicates:")
 printInfo(list=boardList2)
 

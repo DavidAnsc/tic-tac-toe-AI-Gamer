@@ -2,46 +2,6 @@ from dependencies import *
 
 # This is the place that I will store all calculation-related functions. And no direct expression in this file. Only functions
 
-def printInfo(list: list[BoardData]):
-    # This function prints the count of oList & xList in a specific boardList, also gives a board count after all.
-    count = 0
-    xCount = 0
-    oCount = 0
-    for x in list:
-        for i1, t in enumerate(x.oList):
-            if i1 == 0:
-                count += 1
-            #     print(f"{count}: ", end="")
-            #     print("oList: ", end="")
-            # print(t)
-            oCount += 1
-        for i2, r in enumerate(x.xList):
-            #     print("xList: ", end="")
-            # print(r)
-            xCount += 1
-
-    print(f"The count before removing duplicates: o:{oCount}, x:{xCount} \nThe board count is: {count}")
-
-def removeDupl():
-    # This is the sorting code 👇🏿
-    for x in boardList:
-        x.oList.sort()
-        x.xList.sort()
-    for x in boardList2:
-        x.oList.sort()
-        x.xList.sort()
-
-    # This is the removing code 👇🏿
-    for i, x in enumerate(boardList):
-        for i2, y in enumerate(boardList):
-            if (not i == i2) and x == y:
-                boardList.remove(x)
-    for i, x in enumerate(boardList2):
-        for i2, y in enumerate(boardList2):
-            if i == i2 and x == y:
-                boardList2.remove(x)
-
-
 def oneOneBoardList():
     index = -1
     for v in BoardData.allPlacements:
@@ -75,9 +35,8 @@ def twoOneBoardList():
     index = -1
     for v in BoardData.allPlacements:
         index = index + 1
-        oItem = PositionData(position=v.position)
 
-        boardList2[index].oList.append(oItem)
+        boardList2[index].oList.append(v)
 
         for y in BoardData.allPlacements:
             if not y == v and len(boardList2[index].oList) == 1:
@@ -85,51 +44,139 @@ def twoOneBoardList():
                 boardList2[index].oList.append(oItem)
                 for u in BoardData.allPlacements:
                     if not u == v and not u == oItem and len(boardList2[index].xList) == 0:
-                        xItem = u
-                        boardList2[index].xList.append(xItem)
-                    elif len(boardList2[index].xList) > 0 and not u == v and not u == oItem:
-                        index += 1
-                        oItem = v
-                        boardList2[index].oList.append(oItem)
-
-                        oItem = y
-                        boardList2[index].oList.append(oItem)
-
-                        xItem = u
-                        boardList2[index].xList.append(xItem)
-            elif not y == v and len(boardList2[index].oList) > 1:
-                index += 1
-
-                oItem = v
-                boardList2[index].oList.append(oItem)
-
-                oItem = y
-                boardList2[index].oList.append(oItem)
-
-                for u in BoardData.allPlacements:
-                    if not u == v and not u == oItem and len(boardList2[index].xList) == 0:
                         boardList2[index].xList.append(u)
                     elif len(boardList2[index].xList) > 0 and not u == v and not u == oItem:
                         index += 1
-                        oItem = v
-                        boardList2[index].oList.append(oItem)
+                        boardList2[index].oList.append(v)
 
-                        oItem = y
-                        boardList2[index].oList.append(oItem)
+                        boardList2[index].oList.append(y)
 
-                        xItem = u
-                        boardList2[index].xList.append(xItem)
+                        boardList2[index].xList.append(u)
+            elif not y == v and len(boardList2[index].oList) > 1:
+                index += 1
+
+                boardList2[index].oList.append(v)
+
+                boardList2[index].oList.append(y)
+
+                for u in BoardData.allPlacements:
+                    if not u == v and not u == y and len(boardList2[index].xList) == 0:
+                        boardList2[index].xList.append(u)
+                    elif len(boardList2[index].xList) > 0 and not u == v and not u == y:
+                        index += 1
+                        boardList2[index].oList.append(v)
+
+                        boardList2[index].oList.append(y)
+
+                        boardList2[index].xList.append(u)
             else:
                 xItem = PositionData(position=[-1, -1])
                 # ☝️ is the "2" part.
 
 
+def twoTwoBoardList():
+    index = -1
+    for v in BoardData.allPlacements:
+        index = index + 1
 
-twoOneBoardList()
-print("Before removing duplicates:")
-printInfo(list=boardList2)
+        boardList3[index].oList.append(v)
 
-removeDupl()
+        for p in BoardData.allPlacements:
+            if not p == v and len(boardList3[index].oList) == 1:
+                boardList3[index].oList.append(p)
+                for c in BoardData.allPlacements:
+                    if len(boardList3[index].xList) == 0 and c != p and c != v:
+                        boardList3[index].xList.append(c)
 
-print("After removing duplicates:")
-printInfo(list=boardList2)
+                        for d in BoardData.allPlacements:
+                            if len(boardList3[index].xList) == 1 and not d == p and not d == v and not d == c:
+                                boardList3[index].xList.append(d)
+                            elif len(boardList3[index].xList) > 1 and not d == p and not d == v and not d == c:
+                                index += 1
+                                boardList3[index].oList.append(v)
+                                boardList3[index].oList.append(p)
+
+                                boardList3[index].xList.append(c)
+                                boardList3[index].xList.append(d)
+                    elif len(boardList3[index].xList) > 0 and not c == p and not c == v:
+                        index += 1
+                        boardList3[index].oList.append(v)
+                        boardList3[index].oList.append(p)
+
+                        boardList3[index].xList.append(c)
+
+                        for d in BoardData.allPlacements:
+                            if len(boardList3[index].xList) == 1 and not d == p and not d == v and not d == c:
+                                boardList3[index].xList.append(d)
+                            elif len(boardList3[index].xList) > 1 and not d == p and not d == v and not d == c:
+                                index += 1
+                                boardList3[index].oList.append(v)
+                                boardList3[index].oList.append(p)
+
+                                boardList3[index].xList.append(c)
+                                boardList3[index].xList.append(d)
+
+            elif not p == v and len(boardList3[index].oList) > 1:
+                index += 1
+
+                oItem = v
+                boardList3[index].oList.append(oItem)
+
+                oItem = p
+                boardList3[index].oList.append(oItem)
+
+                for c in BoardData.allPlacements:
+                    if len(boardList3[index].xList) == 0 and not c == p and not c == v:
+                        boardList3[index].xList.append(c)
+
+                        for d in BoardData.allPlacements:
+                            if len(boardList3[index].xList) == 1 and not d == p and not d == v and not d == c:
+                                boardList3[index].xList.append(d)
+                            elif len(boardList3[index].xList) > 1 and not d == p and not d == v and not d == c:
+                                index += 1
+                                boardList3[index].oList.append(v)
+                                boardList3[index].oList.append(p)
+
+                                boardList3[index].xList.append(c)
+                                boardList3[index].xList.append(d)
+                    elif len(boardList3[index].xList) > 0 and not c == p and not c == v:
+                        index += 1
+                        boardList3[index].oList.append(v)
+                        boardList3[index].oList.append(p)
+
+                        boardList3[index].xList.append(c)
+
+                        for d in BoardData.allPlacements:
+                            if len(boardList3[index].xList) == 1 and not d == p and not d == v and not d == c:
+                                boardList3[index].xList.append(d)
+                            elif len(boardList3[index].xList) > 1 and not d == p and not d == v and not d == c:
+                                index += 1
+                                boardList3[index].oList.append(v)
+                                boardList3[index].oList.append(p)
+
+                                boardList3[index].xList.append(c)
+                                boardList3[index].xList.append(d)
+
+
+def sortList(list6: list[BoardData]):
+    # Tested:
+    for x in list6:
+        x.oList.sort()
+        x.xList.sort()
+    # Until here
+
+
+def removeDupl(list5: list[BoardData]):
+    deletionList = {}
+    duplicate = 0
+    for i, u in enumerate(list5):
+        duplicate = 0
+        for index, l in enumerate(list5):
+            if index != i and u.oList == l.oList and u.xList == l.xList and not l in deletionList.keys():
+                duplicate += 1
+                deletionList.update({u:duplicate})
+
+
+    for o in deletionList:
+        for _ in range(0, list5.count(o)):
+            list5.remove(o)
